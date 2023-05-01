@@ -1,0 +1,3 @@
+2023-04-30 15:17:34 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "STAR_TREK_USER" already exists; SQL statement:
+CREATE TABLE STAR_TREK_USER (id VARCHAR(255),  name VARCHAR(255),  home VARCHAR(255),  species VARCHAR(255)) [42101-214]

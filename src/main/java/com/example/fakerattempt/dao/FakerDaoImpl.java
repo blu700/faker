@@ -16,11 +16,6 @@ public class FakerDaoImpl  implements  FakerDao{
     public FakerDaoImpl() {
         Faker faker = new Faker();
         user = new ArrayList<>();
-        user.add(new User(1, faker.starTrek().character(), faker.starTrek().location(),faker.starTrek().specie()));
-        user.add(new User(2, faker.starTrek().character(), faker.starTrek().location(),faker.starTrek().specie()));
-        user.add(new User(3, faker.starTrek().character(), faker.starTrek().location(),faker.starTrek().specie()));
-        user.add(new User(4, faker.starTrek().character(), faker.starTrek().location(),faker.starTrek().specie()));
-        user.add(new User(5, faker.starTrek().character(), faker.starTrek().location(),faker.starTrek().specie()));
     }
 
     @Override
