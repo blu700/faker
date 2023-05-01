@@ -1,5 +1,6 @@
 package com.example.fakerattempt.main;
 
+import com.example.fakerattempt.dao.ConnectionManager;
 import com.example.fakerattempt.dao.FakerDao;
 import com.example.fakerattempt.dao.FakerDaoImpl;
 import com.example.fakerattempt.model.User;
@@ -20,14 +21,13 @@ public class AccessUser {
         Connection conn = null;
         PreparedStatement stmt = null;
 
-
         try {
             //STEP 2: Register JDBC driver
             Class.forName(JDBC_DRIVER);
 
             //STEP 3: Open a connection
             System.out.println("Connecting to a selected database...");
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            conn = ConnectionManager.getConnection();
             System.out.println("Connected database successfully...");
 
             //STEP 4: Execute a query
@@ -45,6 +45,12 @@ public class AccessUser {
                 stmt.execute();
             }
              System.out.println("Inserted records into the table...");
+             System.out.println("executing select");
+             ResultSet rs = conn.createStatement().executeQuery("select id, name, home, species from star_trek_user");
+             while (rs.next()) {
+                 System.out.println(rs.getString("name"));
+             }
+             rs.close();
 
     } catch (
     SQLException se) {

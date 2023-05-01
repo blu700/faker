@@ -2,8 +2,11 @@ package com.example.fakerattempt.UserTable;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import com.example.fakerattempt.dao.ConnectionManager;
 
 public class JDBCFakerUserNewTable {
     // JDBC driver name and database URL
@@ -24,7 +27,7 @@ public class JDBCFakerUserNewTable {
 
             //STEP 3: Open a connection
             System.out.println("Connecting to a selected database...");
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            conn = ConnectionManager.getConnection();
             System.out.println("Connected database successfully...");
 
             //STEP 4: Execute a query
@@ -38,6 +41,8 @@ public class JDBCFakerUserNewTable {
                     " species VARCHAR(255))";
 
             stmt.executeUpdate(sql);
+            stmt.close();
+
             System.out.println("Created table in given database...");
         } catch (Exception se) {
             //Handle errors for JDBC
