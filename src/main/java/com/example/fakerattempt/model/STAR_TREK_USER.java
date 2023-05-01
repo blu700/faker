@@ -1,15 +1,33 @@
 package com.example.fakerattempt.model;
 
+import jakarta.persistence.*;
 
-public class User {
+@Entity
+@Table
+public class STAR_TREK_USER {
 
-
+    @Id
+    @GeneratedValue
+    @Column(name = "USER_ID")
     String id;
-    String name;
+
+    @Column(name = "USER_HOME")
     String home;
+
+    @Column(name = "USER_NAME")
+    String name;
+
+    @Column(name = "USER_SPECIES")
     String species;
 
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
     public String getName() {
         return name;
     }
@@ -32,14 +50,6 @@ public class User {
 
     public void setSpecies(String species) {
         this.species = species;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
 

@@ -11,29 +11,24 @@ import java.util.UUID;
 
 import javax.sql.DataSource;
 
+import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
-import com.example.fakerattempt.model.User;
+import com.example.fakerattempt.model.STAR_TREK_USER;
 import com.github.javafaker.Faker;
-
-import jakarta.servlet.annotation.WebInitParam;
-import javafx.scene.chart.PieChart.Data;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-public class UserDAO {
+public class UserDAO implements UserInterface<STAR_TREK_USER> {
     private static final int INITIAL_USER_COUNT = 10;
+
 
     @Autowired
     DataSource dataSource;
 
-    ConnectionManager connectionManager;
-
-   
-
+    @Override
+    @Transactional
     public void createDatabase(boolean deleteTables) {
         if (deleteTables)
             dropTables();
@@ -42,10 +37,10 @@ public class UserDAO {
                 Statement stmt = conn.createStatement()) {
 
             String sql = "CREATE TABLE IF NOT EXISTS STAR_TREK_USER " +
-                    "(id VARCHAR(255), " +
-                    " name VARCHAR(255), " +
-                    " home VARCHAR(255), " +
-                    " species VARCHAR(255))";
+                    "(user_id VARCHAR(255) not null, " +
+                    " user_home VARCHAR(255), " +
+                    " user_name VARCHAR(255)," +
+                    " user_species VARCHAR(255))";
 
             stmt.executeUpdate(sql);
 
@@ -57,7 +52,8 @@ public class UserDAO {
 
     }
 
-    private void dropTables() {
+    @Override
+    public void dropTables() {
 
         try (Connection conn = dataSource.getConnection();
                 Statement stmt = conn.createStatement()) {
@@ -74,8 +70,10 @@ public class UserDAO {
 
     }
 
+    @Override
+    @Transactional
     public void addSampleUsers() {
-        String sql = "INSERT INTO STAR_TREK_USER (id, name, home, species) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO STAR_TREK_USER (user_id, user_home, user_name, user_species) VALUES (?, ?, ?, ?)";
         try (Connection conn = dataSource.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -84,9 +82,8 @@ public class UserDAO {
             int i = INITIAL_USER_COUNT;
             while (i-- > 0) {
                 stmt.setString(1, UUID.randomUUID().toString());
-
-                stmt.setString(2, faker.starTrek().character());
-                stmt.setString(3, faker.starTrek().location());
+                stmt.setString(2, faker.starTrek().location());
+                stmt.setString(3, faker.starTrek().character());
                 stmt.setString(4, faker.starTrek().specie());
                 stmt.execute();
             }
@@ -97,18 +94,19 @@ public class UserDAO {
         }
     }
 
-    public List<User> getAllUsers() {
-        List<User> users = new ArrayList<>();
-        String sql = "select id, name, home, species from star_trek_user";
+    @Override
+    public List<STAR_TREK_USER> getAllUsers() {
+        List<STAR_TREK_USER> users = new ArrayList<>();
+        String sql = "select user_id, user_home, user_name, user_species from star_trek_user";
         try (Connection conn = dataSource.getConnection();
              ResultSet rs = conn.createStatement().executeQuery(sql)) {
                     
                     while (rs.next()) {
-                        User user = new User();
-                        user.setId(rs.getString("id"));
-                        user.setName(rs.getString("name"));
-                        user.setHome(rs.getString("home"));
-                        user.setSpecies(rs.getString("species"));
+                        STAR_TREK_USER user = new STAR_TREK_USER();
+                        user.setId(rs.getString("USER_ID"));
+                        user.setName(rs.getString("USER_HOME"));
+                        user.setHome(rs.getString("USER_NAME"));
+                        user.setSpecies(rs.getString("USER_SPECIES"));
                         users.add(user);
                     }
 

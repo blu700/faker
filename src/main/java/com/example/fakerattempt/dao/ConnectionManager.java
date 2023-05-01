@@ -14,15 +14,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-
 @PropertySource({ "classpath:application.properties" })
 public class ConnectionManager {
 
     public static Connection getConnection() throws SQLException {
         Path currentRelativePath = Paths.get("");
         String s = currentRelativePath.toAbsolutePath().toString();
-        String JDBC_DRIVER = "org.h2.Driver.public"; // org.h2.Driver
-        String DB_URL = "jdbc:h2:file:" + s + "/jeffs_db;DB_CLOSE_ON_EXIT=FALSE";
+        String JDBC_DRIVER = "org.h2.Driver"; // org.h2.Driver
+        String DB_URL = "jdbc:h2:file:C:/temp/test";
         // Database credentials
         String USER = "sa";
         String PASS = "password";
@@ -30,8 +29,14 @@ public class ConnectionManager {
     }
 
     @Bean
-    public DataSource getDataSource() {
+    public DataSource dataSource()
+    {
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
+        dataSourceBuilder.driverClassName("org.h2.Driver");
+        dataSourceBuilder.url("jdbc:h2:file:C:/temp/test");
+        dataSourceBuilder.username("sa");
+        dataSourceBuilder.password("password");
         return dataSourceBuilder.build();
     }
+
 }

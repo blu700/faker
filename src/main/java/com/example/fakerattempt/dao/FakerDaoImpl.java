@@ -1,17 +1,18 @@
 package com.example.fakerattempt.dao;
 
-import com.example.fakerattempt.model.User;
+import com.example.fakerattempt.model.STAR_TREK_USER;
 import com.github.javafaker.Faker;
 import com.github.javafaker.IdNumber;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class FakerDaoImpl  implements  FakerDao{
 
     //List works as database
-    private List<User> user;
+    private List<STAR_TREK_USER> user;
 
     public FakerDaoImpl() {
         Faker faker = new Faker();
@@ -19,22 +20,22 @@ public class FakerDaoImpl  implements  FakerDao{
     }
 
     @Override
-    public List<User> getAllUsers() {
+    public List<STAR_TREK_USER> getAllUsers() {
         return this.user;
     }
 
     @Override
-    public User getUserById(IdNumber id) {
+    public STAR_TREK_USER getUserById(IdNumber id) {
         return null;
     }
 
     @Override
-    public void saveUser(User user) {
+    public void saveUser(STAR_TREK_USER user) {
 
     }
 
     @Override
-    public void deleteUser(User user) {
+    public void deleteUser(STAR_TREK_USER user) {
 
     }
 }
