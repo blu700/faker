@@ -1,4 +1,4 @@
-package com.example.fakerattempt.service;
+package com.example.fakerattempt.Controller;
 
 
 import java.util.List;
