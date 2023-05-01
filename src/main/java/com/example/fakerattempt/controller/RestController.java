@@ -1,4 +1,4 @@
-package com.example.fakerattempt.Controller;
+package com.example.fakerattempt.controller;
 
 
 import java.util.List;
