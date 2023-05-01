@@ -1,4 +1,4 @@
-package com.example.fakerattempt.dao;
+package com.example.trek.dao;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

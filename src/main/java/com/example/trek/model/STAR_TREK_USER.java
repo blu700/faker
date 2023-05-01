@@ -1,4 +1,4 @@
-package com.example.fakerattempt.model;
+package com.example.trek.model;
 
 import jakarta.persistence.*;
 

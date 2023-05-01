@@ -1,4 +1,4 @@
-package com.example.fakerattempt.controller;
+package com.example.trek.controller;
 
 
 import java.util.List;
@@ -8,8 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.fakerattempt.dao.UserDAO;
-import com.example.fakerattempt.model.STAR_TREK_USER;
+import com.example.trek.dao.UserDAO;
+import com.example.trek.model.STAR_TREK_USER;
 
 @org.springframework.web.bind.annotation.RestController
 public class RestController {

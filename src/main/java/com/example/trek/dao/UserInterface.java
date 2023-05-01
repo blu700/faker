@@ -1,6 +1,6 @@
-package com.example.fakerattempt.dao;
+package com.example.trek.dao;
 
-import com.example.fakerattempt.model.STAR_TREK_USER;
+import com.example.trek.model.STAR_TREK_USER;
 
 import java.util.List;
 

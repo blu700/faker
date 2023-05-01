@@ -1,4 +1,4 @@
-package com.example.fakerattempt.dao;
+package com.example.trek.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,10 +11,9 @@ import java.util.UUID;
 
 import javax.sql.DataSource;
 
-import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.example.fakerattempt.model.STAR_TREK_USER;
+import com.example.trek.model.STAR_TREK_USER;
 import com.github.javafaker.Faker;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
