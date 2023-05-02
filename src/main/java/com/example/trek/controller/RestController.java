@@ -30,4 +30,9 @@ public class RestController {
         return ResponseEntity.ok(userDAO.getAllUsers());
 	}
 
+    @GetMapping("/api/users")
+    public ResponseEntity<List<STAR_TREK_USER>> findAll() {
+        return ResponseEntity.ok(userDAO.getAllUsers());
+    }
+
 }

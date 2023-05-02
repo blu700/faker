@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import javax.sql.DataSource;
@@ -19,7 +20,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-public class UserDAO implements UserInterface<STAR_TREK_USER> {
+public class UserDAO implements UserInterface {
     private static final int INITIAL_USER_COUNT = 10;
 
 
@@ -115,5 +116,6 @@ public class UserDAO implements UserInterface<STAR_TREK_USER> {
         }
         return users;
     }
+
 
 }
