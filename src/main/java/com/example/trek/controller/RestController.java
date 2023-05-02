@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -30,9 +31,15 @@ public class RestController {
         return ResponseEntity.ok(userDAO.getAllUsers());
 	}
 
+    @CrossOrigin(origins = "http://localhost:8080")
     @GetMapping("/api/users")
     public ResponseEntity<List<STAR_TREK_USER>> findAll() {
         return ResponseEntity.ok(userDAO.getAllUsers());
     }
+
+    //TODO: create rest controller that add more random users || allow CORS
+    //TODO: create rest controller that deletes the table || allow CORS
+    //TODO: create rest controller that adds data from form input
+
 
 }

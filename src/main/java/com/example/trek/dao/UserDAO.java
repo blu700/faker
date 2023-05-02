@@ -104,8 +104,8 @@ public class UserDAO implements UserInterface {
                     while (rs.next()) {
                         STAR_TREK_USER user = new STAR_TREK_USER();
                         user.setId(rs.getString("USER_ID"));
-                        user.setName(rs.getString("USER_HOME"));
-                        user.setHome(rs.getString("USER_NAME"));
+                        user.setHome(rs.getString("USER_HOME"));
+                        user.setName(rs.getString("USER_NAME"));
                         user.setSpecies(rs.getString("USER_SPECIES"));
                         users.add(user);
                     }
