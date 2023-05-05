@@ -1,6 +1,6 @@
 package com.example.trek.dao;
 
-import com.example.trek.model.STAR_TREK_USER;
+import com.example.trek.user.STAR_TREK_USER;
 import com.github.javafaker.IdNumber;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.example.trek.dao;
+package com.example.trek.user;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,14 +7,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.example.trek.model.STAR_TREK_USER;
 import com.github.javafaker.Faker;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -117,5 +115,21 @@ public class UserDAO implements UserInterface {
         return users;
     }
 
+    @Override
+    public void addNewUser(STAR_TREK_USER stu) {
+        String sql = "INSERT INTO STAR_TREK_USER (user_id, user_home, user_name, user_species) VALUES (?,?,?,?)";
+        try (Connection conn = dataSource.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
 
+            stmt.setString(1, UUID.randomUUID().toString());
+            stmt.setString(2, stu.home);
+            stmt.setString(3, stu.name);
+            stmt.setString(4, stu.species);
+            stmt.execute();
+
+
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
+    }
 }

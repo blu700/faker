@@ -1,4 +1,4 @@
-package com.example.trek.model;
+package com.example.trek.user;
 
 import jakarta.persistence.*;
 

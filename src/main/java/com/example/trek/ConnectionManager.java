@@ -1,4 +1,4 @@
-package com.example.trek.dao;
+package com.example.trek;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

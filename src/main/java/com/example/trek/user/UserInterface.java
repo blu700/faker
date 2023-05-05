@@ -1,7 +1,6 @@
-package com.example.trek.dao;
+package com.example.trek.user;
 
-import com.example.trek.model.STAR_TREK_USER;
-import org.springframework.data.repository.CrudRepository;
+import com.example.trek.user.STAR_TREK_USER;
 
 import java.util.List;
 
@@ -14,4 +13,6 @@ public interface UserInterface<U> {
     void addSampleUsers();
 
     List<STAR_TREK_USER> getAllUsers();
+
+    void addNewUser(STAR_TREK_USER stu);
 }
