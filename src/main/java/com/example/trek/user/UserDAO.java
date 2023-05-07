@@ -98,7 +98,7 @@ public class UserDAO implements UserInterface {
         String sql = "select user_id, user_home, user_name, user_species from star_trek_user";
         try (Connection conn = dataSource.getConnection();
              ResultSet rs = conn.createStatement().executeQuery(sql)) {
-                    
+
                     while (rs.next()) {
                         STAR_TREK_USER user = new STAR_TREK_USER();
                         user.setId(rs.getString("USER_ID"));
@@ -131,5 +131,49 @@ public class UserDAO implements UserInterface {
         } catch (SQLException se) {
             se.printStackTrace();
         }
+    }
+
+    @Override
+    public Object getUser(String userId) {
+
+        STAR_TREK_USER user = new STAR_TREK_USER();
+        String sql = "select * from STAR_TREK_USER " +
+                "where user_id='" + userId + "'";
+
+        try (Connection conn = dataSource.getConnection();
+             ResultSet rs = conn.createStatement().executeQuery(sql)) {
+
+            while (rs.next()) {
+                user.setId(rs.getString("USER_ID"));
+                user.setHome(rs.getString("USER_HOME"));
+                user.setName(rs.getString("USER_NAME"));
+                user.setSpecies(rs.getString("USER_SPECIES"));
+            }
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
+        return user;
+    }
+
+    @Override
+    public void updateUser(STAR_TREK_USER stu) {
+        String sql = "UPDATE STAR_TREK_USER " +
+                    "SET USER_HOME = ?, " +
+                        "USER_NAME = ?, " +
+                        "USER_SPECIES = ? " +
+                    "WHERE USER_ID = '" + stu.id + "'";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, stu.home);
+            stmt.setString(2, stu.name);
+            stmt.setString(3, stu.species);
+            stmt.execute();
+
+
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
+
     }
 }

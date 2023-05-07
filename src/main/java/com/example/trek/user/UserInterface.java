@@ -15,4 +15,8 @@ public interface UserInterface<U> {
     List<STAR_TREK_USER> getAllUsers();
 
     void addNewUser(STAR_TREK_USER stu);
+
+    Object getUser(String userId);
+
+    void updateUser(STAR_TREK_USER stu);
 }

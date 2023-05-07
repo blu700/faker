@@ -40,9 +40,7 @@ public class RestController {
         return ResponseEntity.ok(userDAO.getAllUsers());
     }
 
-    //TODO: create rest controller that add more random users || allow CORS -- easy time
-    //TODO: create rest controller that deletes the table || allow CORS --easy time
-    //TODO: create rest controller that adds data from form input --hard
+
             //COMPLETED:: Domain table for homes on front end form.
 
     @GetMapping("/db/dom-home-int")
@@ -59,6 +57,11 @@ public class RestController {
 
     }
 
+    @GetMapping("/api/users/edit/{id}")
+    public ResponseEntity<Object> getUser(@PathVariable("id") String userId) {
+        return ResponseEntity.ok(userDAO.getUser(userId));
+    }
+
     @GetMapping("/api/homes")
     public ResponseEntity<List<DomainTableHome>> findAllLocations() {return ResponseEntity.ok(homeDomainDAO.getAllLocations());}
 
@@ -70,5 +73,13 @@ public class RestController {
         return ResponseEntity.created(URI.create(String.format("/user/%s", stu))).body(stu);
     }
 
+    @PostMapping("/api/edit-existing")
+    public ResponseEntity<STAR_TREK_USER> editCurrent(@RequestBody STAR_TREK_USER stu) {
+
+        userDAO.updateUser(stu);
+
+        return ResponseEntity.ok(stu);
+
+    }
 
 }
