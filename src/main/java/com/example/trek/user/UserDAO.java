@@ -35,7 +35,8 @@ public class UserDAO implements UserInterface {
                 Statement stmt = conn.createStatement()) {
 
             String sql = "CREATE TABLE IF NOT EXISTS STAR_TREK_USER " +
-                    "(user_id VARCHAR(255) not null, " +
+                    "(uuid VARCHAR(255) not null, " +
+                    "user_id VARCHAR(255) not null, " +
                     " user_home VARCHAR(255), " +
                     " user_name VARCHAR(255)," +
                     " user_species VARCHAR(255))";
@@ -71,18 +72,23 @@ public class UserDAO implements UserInterface {
     @Override
     @Transactional
     public void addSampleUsers() {
-        String sql = "INSERT INTO STAR_TREK_USER (user_id, user_home, user_name, user_species) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO STAR_TREK_USER (uuid, user_id, user_home, user_name, user_species) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = dataSource.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             Faker faker = new Faker();
+            int max = 99999;
+            int min = 10000;
+
 
             int i = INITIAL_USER_COUNT;
             while (i-- > 0) {
+                long newId = Math.round(Math.random() *(max - min + 1) + min);
                 stmt.setString(1, UUID.randomUUID().toString());
-                stmt.setString(2, faker.starTrek().location());
-                stmt.setString(3, faker.starTrek().character());
-                stmt.setString(4, faker.starTrek().specie());
+                stmt.setString(2, String.valueOf(newId));
+                stmt.setString(3, faker.starTrek().location());
+                stmt.setString(4, faker.starTrek().character());
+                stmt.setString(5, faker.starTrek().specie());
                 stmt.execute();
             }
 
@@ -95,12 +101,13 @@ public class UserDAO implements UserInterface {
     @Override
     public List<STAR_TREK_USER> getAllUsers() {
         List<STAR_TREK_USER> users = new ArrayList<>();
-        String sql = "select user_id, user_home, user_name, user_species from star_trek_user";
+        String sql = "select * from star_trek_user";
         try (Connection conn = dataSource.getConnection();
              ResultSet rs = conn.createStatement().executeQuery(sql)) {
 
                     while (rs.next()) {
                         STAR_TREK_USER user = new STAR_TREK_USER();
+                        user.setUuid(rs.getString("UUID"));
                         user.setId(rs.getString("USER_ID"));
                         user.setHome(rs.getString("USER_HOME"));
                         user.setName(rs.getString("USER_NAME"));
@@ -117,14 +124,20 @@ public class UserDAO implements UserInterface {
 
     @Override
     public void addNewUser(STAR_TREK_USER stu) {
-        String sql = "INSERT INTO STAR_TREK_USER (user_id, user_home, user_name, user_species) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO STAR_TREK_USER (uuid, user_id, user_home, user_name, user_species) VALUES (?,?,?,?,?)";
         try (Connection conn = dataSource.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
 
+            int max = 99999;
+            int min = 10000;
+
+            long newId = Math.round(Math.random() *(max - min + 1) + min);
+
             stmt.setString(1, UUID.randomUUID().toString());
-            stmt.setString(2, stu.home);
-            stmt.setString(3, stu.name);
-            stmt.setString(4, stu.species);
+            stmt.setString(2, String.valueOf(newId));
+            stmt.setString(3, stu.home);
+            stmt.setString(4, stu.name);
+            stmt.setString(5, stu.species);
             stmt.execute();
 
 
@@ -138,12 +151,13 @@ public class UserDAO implements UserInterface {
 
         STAR_TREK_USER user = new STAR_TREK_USER();
         String sql = "select * from STAR_TREK_USER " +
-                "where user_id='" + userId + "'";
+                "where uuid='" + userId + "'";
 
         try (Connection conn = dataSource.getConnection();
              ResultSet rs = conn.createStatement().executeQuery(sql)) {
 
             while (rs.next()) {
+                user.setUuid(rs.getString("UUID"));
                 user.setId(rs.getString("USER_ID"));
                 user.setHome(rs.getString("USER_HOME"));
                 user.setName(rs.getString("USER_NAME"));
@@ -161,7 +175,7 @@ public class UserDAO implements UserInterface {
                     "SET USER_HOME = ?, " +
                         "USER_NAME = ?, " +
                         "USER_SPECIES = ? " +
-                    "WHERE USER_ID = '" + stu.id + "'";
+                    "WHERE UUID = '" + stu.uuid + "'";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
